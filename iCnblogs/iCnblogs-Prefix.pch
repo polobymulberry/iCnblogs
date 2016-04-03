@@ -1,0 +1,111 @@
+//
+//  iCnblogs-Prefix.pch
+//  iCnblogs
+//
+//  Created by poloby on 15/12/29.
+//  Copyright © 2015年 poloby. All rights reserved.
+//
+
+#ifndef iCnblogs_Prefix_pch
+#define iCnblogs_Prefix_pch
+
+#ifdef __OBJC__
+    #import <UIKit/UIKit.h>
+    #import <Foundation/Foundation.h>
+    #import "UIImage+Extension.h"
+    #import "UIView+Extension.h"
+    #import "NSDate+Extension.h"
+    #import "UIFont+Extension.h"
+#endif
+
+#ifdef DEBUG
+#define ICLog(...) NSLog(__VA_ARGS__)
+#else
+#define ICLog(...)
+#endif
+
+// App ID
+#define APPID 1084217201
+
+// 判断机型
+// iOS8中的bounds会根据屏幕是否横竖屏变化
+// 虽然此app暂时不支持iOS7，先代码写在这
+
+#define IS_IPHONE ( [ [ [ UIDevice currentDevice ] model ] isEqualToString: @"iPhone" ] )
+#define IS_IPOD   ( [ [ [ UIDevice currentDevice ] model ] isEqualToString: @"iPod touch" ] )
+
+// iPhone4S or less bounds:320x480 nativeBounds:640x960
+#define IS_IPHONE_4_OR_LESS_OR_IPOD_TOUCH_IOS7 ( fabs( ( double )[ [ UIScreen mainScreen ] bounds ].size.height - ( double )480 ) < DBL_EPSILON )
+#define IS_IPHONE_4_OR_LESS_OR_IPOD_TOUCH_IOS8 ( fabs( ( double )[ [ UIScreen mainScreen ] nativeBounds ].size.height - ( double )960 ) < DBL_EPSILON )
+#define IS_IPHONE_4_OR_LESS_OR_IPOD_TOUCH      ( ( [ [ UIScreen mainScreen ] respondsToSelector: @selector( nativeBounds ) ] ) ? IS_IPHONE_4_OR_LESS_OR_IPOD_TOUCH_IOS8 : IS_IPHONE_4_OR_LESS_OR_IPOD_TOUCH_IOS7 )
+
+#define IS_IPHONE_4_OR_LESS ( IS_IPHONE && IS_IPHONE_4_OR_LESS_OR_IPOD_TOUCH )
+
+// iPhone5/5c/5s bounds:320x568 nativeBounds:640x1136
+#define IS_IPHONE_5_OR_IPOD_TOUCH_IOS7 ( fabs( ( double )[ [ UIScreen mainScreen ] bounds ].size.height - ( double )568 ) < DBL_EPSILON )
+#define IS_IPHONE_5_OR_IPOD_TOUCH_IOS8 ( fabs( ( double )[ [ UIScreen mainScreen ] nativeBounds ].size.height - ( double )1136 ) < DBL_EPSILON )
+#define IS_IPHONE_5_OR_IPOD_TOUCH      ( ( [ [ UIScreen mainScreen ] respondsToSelector: @selector( nativeBounds ) ] ) ? IS_IPHONE_5_OR_IPOD_TOUCH_IOS8 : IS_IPHONE_5_OR_IPOD_TOUCH_IOS7 )
+
+#define IS_IPHONE_5 ( IS_IPHONE && IS_IPHONE_5_OR_IPOD_TOUCH )
+
+// iPhone6 bounds:375x667 nativeBounds:750x1334
+#define IS_IPHONE_6_IOS7 ( fabs( ( double )[ [ UIScreen mainScreen ] bounds ].size.height - ( double )667 ) < DBL_EPSILON )
+#define IS_IPHONE_6_IOS8 ( fabs( ( double )[ [ UIScreen mainScreen ] nativeBounds ].size.height - ( double )1334 ) < DBL_EPSILON )
+#define IS_IPHONE_6     ( ( [ [ UIScreen mainScreen ] respondsToSelector: @selector( nativeBounds ) ] ) ? IS_IPHONE_6_IOS8 : IS_IPHONE_6_IOS7 )
+
+// iPhone6 plus bounds:414x736 nativeBounds:1242x2208
+#define IS_IPHONE_6_PLUS_IOS7 ( fabs( ( double )[ [ UIScreen mainScreen ] bounds ].size.height - ( double )736 ) < DBL_EPSILON )
+#define IS_IPHONE_6_PLUS_IOS8 ( fabs( ( double )[ [ UIScreen mainScreen ] nativeBounds ].size.height - ( double )2208 ) < DBL_EPSILON )
+#define IS_IPHONE_6_PLUS    ( ( [ [ UIScreen mainScreen ] respondsToSelector: @selector( nativeBounds ) ] ) ? IS_IPHONE_6_PLUS_IOS8 : IS_IPHONE_6_PLUS_IOS7 )
+
+// iPhone6s bounds:375x667 nativeBounds:750x1334
+#define IS_IPHONE_6S_IOS7 ( fabs( ( double )[ [ UIScreen mainScreen ] bounds ].size.height - ( double )375 ) < DBL_EPSILON )
+#define IS_IPHONE_6S_IOS8 ( fabs( ( double )[ [ UIScreen mainScreen ] nativeBounds ].size.height - ( double )1334 ) < DBL_EPSILON )
+#define IS_IPHONE_6S    ( ( [ [ UIScreen mainScreen ] respondsToSelector: @selector( nativeBounds ) ] ) ? IS_IPHONE_6S_IOS8 : IS_IPHONE_6S_IOS7 )
+
+// iPhone6s plus bounds:414x736 nativeBounds:1242x2208
+#define IS_IPHONE_6S_PLUS_IOS7 ( fabs( ( double )[ [ UIScreen mainScreen ] bounds ].size.height - ( double )736 ) < DBL_EPSILON )
+#define IS_IPHONE_6S_PLUS_IOS8 ( fabs( ( double )[ [ UIScreen mainScreen ] nativeBounds ].size.height - ( double )2208 ) < DBL_EPSILON )
+#define IS_IPHONE_6S_PLUS    ( ( [ [ UIScreen mainScreen ] respondsToSelector: @selector( nativeBounds ) ] ) ? IS_IPHONE_6S_PLUS_IOS8 : IS_IPHONE_6S_PLUS_IOS7 )
+
+
+#define ICDeviceWidth [UIScreen mainScreen].bounds.size.width
+#define ICDeviceHeight [UIScreen mainScreen].bounds.size.height
+
+// OAuth, 脱敏部分，请重新向博客园申请
+#define ICClientID @"xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"
+#define ICClientSecret @"XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX"
+
+// 颜色集
+// 墨色
+#define ICInkColor [UIColor colorWithWhite:28.0/255.0 alpha:1.0]
+// 银灰
+#define ICSilverColor [UIColor colorWithRed:234/255.0 green:234/255.0 blue:239/255.0 alpha:1.0]
+
+// Content HTML模版
+// 还需要参数, 所以定义了一个宏函数
+#define ContentHTMLTemplateWithArgs(titleFontSize, titleFontColor, timeFontSize, timeFontColor, bodyFontSize, bodyFontColor, title, time, body) \
+[NSString stringWithFormat:\
+@"<html> \
+    <head> \
+        <meta name=\"viewport\" content=\"width=device-width,height=device-height,inital-scale=1.0,minimum-scale=0.5,maximum-scale=1.0,user-scalable=no;\" /> \
+        <meta id=\"vp\" name=\"viewport\" content=\"width=device-width, user-scalable=no,maximum-scale=1.0,initial-scale=1\" /> \
+        <meta name=\"apple-mobile-web-app-capable\" content=\"yes\" /> \
+        <meta name=\"apple-mobile-web-app-status-bar-style\" content=\"black\" /> \
+        <meta name=\"format-detection\" content=\"telephone=no\" /> \
+        <style type=\"text/css\"> \
+            img{max-width:100%%;height:auto;} \
+            object{max-width:100%%;height:auto;} \
+            p.normal {font-weight: normal; font-size: %f; color: %@; font-family: sans-serif;} \
+            p.thick {font-weight: lighter; font-size: %f; color: %@; font-family: sans-serif;} \
+            body {font-size: %f; color: %@; font-family: sans-serif;} \
+        </style> \
+    </head> \
+    <body> \
+    <p><p class=\"normal\">%@</p> \
+    <p><p class=\"thick\">%@</p> \
+    %@ \
+    </body> \
+ </html>", titleFontSize, titleFontColor, timeFontSize, timeFontColor, bodyFontSize, bodyFontColor, title, time, body]
+
+#endif /* iCnblogs_Prefix_pch */
