@@ -30,6 +30,7 @@
         AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
         
         [manager.requestSerializer setAuthorizationHeaderFieldWithUsername:ICClientID password:ICClientSecret];
+        manager.responseSerializer = [AFJSONResponseSerializer serializer];
         [manager POST:ICOAuthTokenURL parameters:@{@"grant_type" : @"refresh_token", @"refresh_token" : refresh_token} progress:^(NSProgress * _Nonnull uploadProgress) {
             // empty
         } success:^(NSURLSessionDataTask * _Nonnull task, NSDictionary *  _Nullable responseObject) {

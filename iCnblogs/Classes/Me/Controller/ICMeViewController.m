@@ -66,6 +66,10 @@
                    [self.navigationController presentViewController:leftMenu animated:YES completion:nil];
                } refreshTokenFailureBlock:^(NSError *error) {
                    ICLog(@"refresh_token failure:%@", error);
+                   // refresh token失败后，应该跳转到登陆界面
+                   ICLoginViewController *loginViewController = [[ICLoginViewController alloc] init];
+                   ICNavigationController *navigationController = [[ICNavigationController alloc] initWithRootViewController:loginViewController];
+                   [self.navigationController presentViewController:navigationController animated:YES completion:nil];
                } noAccessTokenBlock:^{
                    ICLoginViewController *loginViewController = [[ICLoginViewController alloc] init];
                    ICNavigationController *navigationController = [[ICNavigationController alloc] initWithRootViewController:loginViewController];
