@@ -17,7 +17,7 @@ NSString *const kCollectionDate      = @"DateAdded";
 
 @implementation ICCollection
 
-- (instancetype)initWithAttributes:(NSDictionary *)attributes
++ (instancetype)initWithAttributes:(NSDictionary *)attributes
 {
     ICCollection *collection = [[ICCollection alloc] init];
     

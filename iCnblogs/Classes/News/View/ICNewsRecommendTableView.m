@@ -68,7 +68,7 @@ static NSString* recommendNewsNetworkRequestURL(int pageIndex, int pageSize)
             }
             // 对请求的JSON数据进行解析
             for (NSDictionary *result in responseObject) {
-                ICNews *news = [[ICNews alloc] initWithAttributes:result];
+                ICNews *news = [ICNews initWithAttributes:result];
                 [weakSelf.items addObject:news];
             }
             
@@ -90,7 +90,7 @@ static NSString* recommendNewsNetworkRequestURL(int pageIndex, int pageSize)
         [ICNetworkTool loadDataWithURL:requestURL success:^(id responseObject) {
             // 对请求的JSON数据进行解析
             for (NSDictionary *result in responseObject) {
-                ICNews *news = [[ICNews alloc] initWithAttributes:result];
+                ICNews *news = [ICNews initWithAttributes:result];
                 [weakSelf.items addObject:news];
             }
             // 更新tableView视图

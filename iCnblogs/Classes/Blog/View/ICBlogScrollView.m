@@ -75,7 +75,7 @@ static NSString* pickedBlogNetworkRequestURL(int pageIndex, int pageSize)
 {
     NSInteger index = indexPath.section * tableView.numberOfSections + indexPath.row;
     
-    return [tableView fd_heightForCellWithIdentifier:@"ICBlogHomeTableViewCellIdentifier" configuration:^(ICBlogHomeTableViewCell *cell) {
+    return [tableView fd_heightForCellWithIdentifier:@"ICBlogHomeTableViewCellIdentifier" cacheByIndexPath:indexPath configuration:^(ICBlogHomeTableViewCell *cell) {
         if (self.homeBlogItems.count > index) {
             cell.homeBlog = self.homeBlogItems[index];
         }
@@ -238,7 +238,7 @@ static NSString* pickedBlogNetworkRequestURL(int pageIndex, int pageSize)
 - (UITableView *)homeTableView
 {
     if (_homeTableView == nil) {
-        //self.tableView.fd_debugLogEnabled = YES;
+        //_homeTableView.fd_debugLogEnabled = YES;
         _homeTableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, self.width, self.height)];
         // 使用fd这个库所需步骤
         [_homeTableView registerClass:[ICBlogHomeTableViewCell class] forCellReuseIdentifier:@"ICBlogHomeTableViewCellIdentifier"];

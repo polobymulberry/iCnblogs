@@ -31,6 +31,6 @@ extern NSString * const kNewsCommentCount;
 @property (nonatomic, copy) NSString *diggCount;
 @property (nonatomic, copy) NSString *commentCount;
 
-- (instancetype)initWithAttributes:(NSDictionary *)attributes;
++ (instancetype)initWithAttributes:(NSDictionary *)attributes;
 
 @end

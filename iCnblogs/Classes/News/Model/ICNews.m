@@ -19,26 +19,24 @@ NSString * const kNewsCommentCount     = @"CommentCount";
 
 @implementation ICNews
 
-- (instancetype)initWithAttributes:(NSDictionary *)attributes
++ (instancetype)initWithAttributes:(NSDictionary *)attributes
 {
-    self = [super init];
-    
-    if (self) {
-        self.newsId = [attributes[kNewsId] integerValue];
-        self.title = attributes[kNewsTitle];
-        self.summary = attributes[kNewsSummary];
-        self.topicId = [attributes[kNewsTopicId] integerValue];
-        if (attributes[kNewsTopicIcon] && ![attributes[kNewsTopicIcon] isKindOfClass:[NSNull class]]) {
-            self.topicIcon = [NSURL URLWithString:attributes[kNewsTopicIcon]];
-        }
-        
-        self.dateAdded = attributes[kNewsDateAdded];
-        self.diggCount = [attributes[kNewsDiggCount] stringValue];
-        self.viewCount = [attributes[kNewsViewCount] stringValue];
-        self.commentCount = [attributes[kNewsCommentCount] stringValue];
+    ICNews *news = [[ICNews alloc] init];
+
+    news.newsId = [attributes[kNewsId] integerValue];
+    news.title = attributes[kNewsTitle];
+    news.summary = attributes[kNewsSummary];
+    news.topicId = [attributes[kNewsTopicId] integerValue];
+    if (attributes[kNewsTopicIcon] && ![attributes[kNewsTopicIcon] isKindOfClass:[NSNull class]]) {
+        news.topicIcon = [NSURL URLWithString:attributes[kNewsTopicIcon]];
     }
     
-    return self;
+    news.dateAdded = attributes[kNewsDateAdded];
+    news.diggCount = [attributes[kNewsDiggCount] stringValue];
+    news.viewCount = [attributes[kNewsViewCount] stringValue];
+    news.commentCount = [attributes[kNewsCommentCount] stringValue];
+    
+    return news;
 }
 
 #pragma mark - getters and setters

@@ -108,4 +108,18 @@
     </body> \
  </html>", titleFontSize, titleFontColor, timeFontSize, timeFontColor, bodyFontSize, bodyFontColor, title, time, body]
 
+#define SearchContentHTMLTemplateWithArgs(bodyFontSize, bodyFontColor, strongFontSize, strongFontColor, bodyString) \
+[NSString stringWithFormat:\
+@"<html> \
+    <head> \
+        <style type=\"text/css\"> \
+            body {font-size: %f; color: %@; font-family: sans-serif;} \
+            strong {font-size: %f; color: %@; font-family: sans-serif;} \
+        </style> \
+    </head> \
+    <body> \
+    %@ \
+    </body> \
+</html>", bodyFontSize, bodyFontColor, strongFontSize, strongFontColor, bodyString]
+
 #endif /* iCnblogs_Prefix_pch */

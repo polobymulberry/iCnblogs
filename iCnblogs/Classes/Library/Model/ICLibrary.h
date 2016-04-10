@@ -26,6 +26,6 @@ extern NSString *const kICLibraryDateAdded;
 @property (nonatomic, copy) NSString *diggCount;
 @property (nonatomic, copy) NSString *dateAdded;
 
-- (instancetype)initWithAttributes:(NSDictionary *)attributes;
++ (instancetype)initWithAttributes:(NSDictionary *)attributes;
 
 @end

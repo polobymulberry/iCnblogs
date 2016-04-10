@@ -13,13 +13,17 @@
 #import "ICClientCredentialsOAuth.h"
 #import "ICLibraryTableViewCell.h"
 #import "ICLibraryContentViewController.h"
+#import "ICSearchViewController.h"
 #import "ICNavigationController.h"
 #import "ICNetworkTool.h"
+#import "ICSearchModel.h"
+#import "ICSearchTableViewCell.h"
 
 #import <RESideMenu/RESideMenu.h>
 #import <MJRefresh/MJRefresh.h>
 #import <AFNetworking/AFNetworking.h>
 #import <Masonry/Masonry.h>
+#import <UITableView+FDTemplateLayoutCell.h>
 
 static int libraryCurrentPageIndex = 0; // 当前分页请求的页面号
 static const int libraryPageSize = 10; // 每次分页请求的页面大小
@@ -29,11 +33,13 @@ static NSString *libraryNetworkRequestURL(int pageIndex, int pageSize)
     return [NSString stringWithFormat:@"http://api.cnblogs.com/api/KbArticles?pageIndex=%d&pageSize=%d", pageIndex, pageSize];
 }
 
-@interface ICLibraryViewController () <UITableViewDelegate>
+@interface ICLibraryViewController () <UITableViewDelegate, UISearchBarDelegate>//, UISearchResultsUpdating>
 
 @property (nonatomic, strong) UITableView *tableView;
 @property (nonatomic, strong) ICTableViewDataSource *libraryDataSource;
 @property (nonatomic, strong) NSMutableArray *items;
+
+@property (nonatomic, strong) UISearchController *librarySearchController;
 
 @end
 
@@ -42,12 +48,20 @@ static NSString *libraryNetworkRequestURL(int pageIndex, int pageSize)
 #pragma mark - life cycle
 - (void)viewDidLoad
 {
-    self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"icon_left_menu"] style:UIBarButtonItemStylePlain target:self action:@selector(presentLeftSideMenuViewController)];
-    self.navigationItem.title = @"文库";
+    [self setupNavigationBar];
     
     [self.view addSubview:self.tableView];
     
     [self layoutSubPageViews];
+}
+
+- (void)setupNavigationBar
+{
+    self.navigationItem.title = @"文库";
+    
+    self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"icon_left_menu"] style:UIBarButtonItemStylePlain target:self action:@selector(presentLeftSideMenuViewController)];
+    
+    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"btnSearch"] style:UIBarButtonItemStylePlain target:self action:@selector(didTappedSearchBarButton)];
 }
 
 - (void)layoutSubPageViews
@@ -75,6 +89,7 @@ static NSString *libraryNetworkRequestURL(int pageIndex, int pageSize)
         [self.navigationController.navigationBar setBackIndicatorTransitionMaskImage:[UIImage imageNamed:@"btnBack"]];
         UIBarButtonItem *backItem = [[UIBarButtonItem alloc] initWithTitle:@"" style:UIBarButtonItemStylePlain target:nil action:nil];
         self.navigationItem.backBarButtonItem = backItem;
+        
         [(ICNavigationController *)self.navigationController pushViewController:libraryContentViewController items:cell.library animated:YES constructingBodyWithBlock:^(ICLibraryContentViewController *viewController, ICLibrary *items) {
             viewController.libraryId = items.libraryId;
             viewController.libraryTitle = items.title;
@@ -83,10 +98,33 @@ static NSString *libraryNetworkRequestURL(int pageIndex, int pageSize)
     }
 }
 
+//#pragma mark - UISearchResultsUpdating
+//- (void)updateSearchResultsForSearchController:(UISearchController *)searchController
+//{
+//    ICSearchViewController *searchViewController = (ICSearchViewController *)self.librarySearchController.searchResultsController;
+//    searchViewController.searchString = self.librarySearchController.searchBar.text;
+//    UITableView *librarySearchTableView = searchViewController.tableView;
+//    [librarySearchTableView.mj_header beginRefreshing];
+//}
+#pragma mark - UISearchBarDelegate
+- (void)searchBarTextDidEndEditing:(UISearchBar *)searchBar
+{
+    ICSearchViewController *searchViewController = (ICSearchViewController *)self.librarySearchController.searchResultsController;
+    searchViewController.searchString = self.librarySearchController.searchBar.text;
+    UITableView *librarySearchTableView = searchViewController.tableView;
+    [librarySearchTableView.mj_header beginRefreshing];
+}
+
 #pragma mark - event response
 - (void)presentLeftSideMenuViewController
 {
     [self.sideMenuViewController presentLeftMenuViewController];
+}
+
+- (void)didTappedSearchBarButton
+{
+    ICLog(@"didTappedSearchBarButton");
+    [self.navigationController presentViewController:self.librarySearchController animated:YES completion:nil];
 }
 
 #pragma mark - private methods
@@ -106,7 +144,7 @@ static NSString *libraryNetworkRequestURL(int pageIndex, int pageSize)
             }
             // 对请求的JSON数据进行解析
             for (NSDictionary *result in responseObject) {
-                ICLibrary *library = [[ICLibrary alloc] initWithAttributes:result];
+                ICLibrary *library = [ICLibrary initWithAttributes:result];
                 [weakSelf.items addObject:library];
             }
             
@@ -128,7 +166,7 @@ static NSString *libraryNetworkRequestURL(int pageIndex, int pageSize)
         [ICNetworkTool loadDataWithURL:requestURL success:^(id responseObject) {
             // 对请求的JSON数据进行解析
             for (NSDictionary *result in responseObject) {
-                ICLibrary *library = [[ICLibrary alloc] initWithAttributes:result];
+                ICLibrary *library = [ICLibrary initWithAttributes:result];
                 [weakSelf.items addObject:library];
             }
             // 更新tableView视图
@@ -149,6 +187,8 @@ static NSString *libraryNetworkRequestURL(int pageIndex, int pageSize)
     
     [_tableView.mj_header beginRefreshing];
 }
+
+
 
 #pragma mark - getters and setters
 - (UITableView *)tableView
@@ -186,6 +226,22 @@ static NSString *libraryNetworkRequestURL(int pageIndex, int pageSize)
     }
     
     return _items;
+}
+
+- (UISearchController *)librarySearchController
+{
+    if (_librarySearchController == nil) {
+        // 设置resultsViewController
+        ICSearchViewController *resultsViewController = [[ICSearchViewController alloc] initWithStyle:UITableViewStylePlain searchType:ICSearchTypeLibrary];
+
+        _librarySearchController = [[UISearchController alloc] initWithSearchResultsController:resultsViewController];
+        //_librarySearchController.searchResultsUpdater = self;
+        _librarySearchController.searchBar.placeholder = @"输入您要搜索的文库";
+        _librarySearchController.searchBar.tintColor = [UIColor whiteColor];
+        _librarySearchController.searchBar.barTintColor = [UIColor blackColor];
+        _librarySearchController.searchBar.delegate = self;
+    }
+    return _librarySearchController;
 }
 
 @end

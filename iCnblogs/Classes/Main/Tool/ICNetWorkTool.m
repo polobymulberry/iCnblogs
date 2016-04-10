@@ -47,6 +47,57 @@
     }];
 }
 
++ (void)loadDataWithURL:(NSString *)requestURL parameters:(NSDictionary *)parameters success:(void (^)(id))success failure:(void (^)(NSError *))failure
+{
+    AFHTTPSessionManager *session = [AFHTTPSessionManager manager];
+    session.responseSerializer = [AFJSONResponseSerializer serializer];
+    
+    // 如果client credentials授权的oauth已经存储在本地了
+    // 那么就查看access_token是否过期了，如果过期了，那么还需要重新请求
+    if ([ICClientCredentialsOAuthTool isOAuthInfoExistedInStoredData] && ![ICClientCredentialsOAuthTool isAccessTokenExpired:[ICClientCredentialsOAuthTool oauthByStoredData]]) {
+        
+        ICClientCredentialsOAuth *oauth = [ICClientCredentialsOAuthTool oauthByStoredData];
+        
+        NSString *authorizationHeaderValue = [NSString stringWithFormat:@"Bearer %@", oauth.access_token];
+        [session.requestSerializer setValue:authorizationHeaderValue forHTTPHeaderField:@"Authorization"];
+        
+        [session GET:requestURL parameters:parameters progress:^(NSProgress * _Nonnull downloadProgress) {
+            // empty
+        } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
+            if (success) {
+                success(responseObject);
+            }
+        } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
+            if (failure) {
+                failure(error);
+            }
+        }];
+    } else {
+        [ICClientCredentialsOAuthTool oauthWithClientID:ICClientID clientSecret:ICClientSecret success:^(id responseObject) {
+            ICClientCredentialsOAuth *oauth = [ICClientCredentialsOAuth initWithAttribute:responseObject];
+            [ICClientCredentialsOAuthTool save:oauth];
+            
+            NSString *authorizationHeaderValue = [NSString stringWithFormat:@"Bearer %@", oauth.access_token];
+            [session.requestSerializer setValue:authorizationHeaderValue forHTTPHeaderField:@"Authorization"];
+            
+            [session GET:requestURL parameters:parameters progress:^(NSProgress * _Nonnull downloadProgress) {
+                // empty
+            } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
+                if (success) {
+                    success(responseObject);
+                }
+            } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
+                if (failure) {
+                    failure(error);
+                }
+            }];
+        } failure:^(NSError *error) {
+            ICLog(@"loadDataWithURL failure:%@", error);
+        }];
+    }
+
+}
+
 + (void)loadDataWithURL:(NSString *)requestURL success:(void (^)(id))success failure:(void (^)(NSError *))failure
 {
     AFHTTPSessionManager *session = [AFHTTPSessionManager manager];

@@ -68,7 +68,7 @@ static NSString *collectionNetworkRequestURL(int pageIndex, int pageSize)
                 }
                 // 对请求的JSON数据进行解析
                 for (NSDictionary *result in responseObject) {
-                    ICCollection *collection = [[ICCollection alloc] initWithAttributes:result];
+                    ICCollection *collection = [ICCollection initWithAttributes:result];
                     [weakSelf.items addObject:collection];
                 }
                 
@@ -92,7 +92,7 @@ static NSString *collectionNetworkRequestURL(int pageIndex, int pageSize)
             [ICNetworkTool loadDataWithURL:requestURL success:^(id responseObject) {
                 // 对请求的JSON数据进行解析
                 for (NSDictionary *result in responseObject) {
-                    ICCollection *collection = [[ICCollection alloc] initWithAttributes:result];
+                    ICCollection *collection = [ICCollection initWithAttributes:result];
                     [weakSelf.items addObject:collection];
                 }
                 // 更新tableView视图

@@ -24,6 +24,6 @@ extern NSString *const kCollectionDate;
 @property (nonatomic, copy) NSMutableArray *tags;
 @property (nonatomic, strong) NSDate *dateAdded;
 
-- (instancetype)initWithAttributes:(NSDictionary *)attributes;
++ (instancetype)initWithAttributes:(NSDictionary *)attributes;
 
 @end

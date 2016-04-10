@@ -44,6 +44,13 @@ static NSString *libraryContentNetworkRequestURL(NSInteger libraryId)
     }];
 }
 
+#pragma mark - event response
+- (void)didTappedLeftBarButtonItem
+{
+    ICLog(@"didTappedLeftBarButtonItem");
+    [self dismissViewControllerAnimated:YES completion:nil];
+}
+
 #pragma mark - getters and setters
 - (UIWebView *)webView
 {

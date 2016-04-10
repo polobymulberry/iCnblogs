@@ -61,6 +61,7 @@
 		C568EBDC1C3EB61900BA8052 /* ICCollectionViewDataSource.m in Sources */ = {isa = PBXBuildFile; fileRef = C568EBDB1C3EB61900BA8052 /* ICCollectionViewDataSource.m */; };
 		C568EBDF1C414B8300BA8052 /* ICNewsNewestTableView.m in Sources */ = {isa = PBXBuildFile; fileRef = C568EBDE1C414B8300BA8052 /* ICNewsNewestTableView.m */; };
 		C56C3E7C1C831BC9003443B3 /* ICInputTextField.m in Sources */ = {isa = PBXBuildFile; fileRef = C56C3E7B1C831BC9003443B3 /* ICInputTextField.m */; };
+		C57275FF1CB7B98800F5ED18 /* ICSearchViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C57275FE1CB7B98800F5ED18 /* ICSearchViewController.m */; };
 		C57A6BD31C378814008B2129 /* ICNavigationController.m in Sources */ = {isa = PBXBuildFile; fileRef = C57A6BD21C378814008B2129 /* ICNavigationController.m */; };
 		C57A6BDC1C39345E008B2129 /* UIView+Extension.m in Sources */ = {isa = PBXBuildFile; fileRef = C57A6BDB1C39345E008B2129 /* UIView+Extension.m */; };
 		C57A6BE01C3945F8008B2129 /* ICBlogHomeTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = C57A6BDF1C3945F8008B2129 /* ICBlogHomeTableViewCell.m */; };
@@ -71,6 +72,8 @@
 		C58FF6151C93EFAB0064A3BF /* ICLibrary.m in Sources */ = {isa = PBXBuildFile; fileRef = C58FF6141C93EFAB0064A3BF /* ICLibrary.m */; };
 		C58FF6181C9401300064A3BF /* ICLibraryTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = C58FF6171C9401300064A3BF /* ICLibraryTableViewCell.m */; };
 		C58FF61B1C947AAE0064A3BF /* ICLibraryContentViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C58FF61A1C947AAE0064A3BF /* ICLibraryContentViewController.m */; };
+		C5BFEBED1CB8985E00E0C836 /* ICSearchModel.m in Sources */ = {isa = PBXBuildFile; fileRef = C5BFEBEC1CB8985E00E0C836 /* ICSearchModel.m */; };
+		C5BFEBF01CB8ACB400E0C836 /* ICSearchTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = C5BFEBEF1CB8ACB400E0C836 /* ICSearchTableViewCell.m */; };
 		E8D87BD2BC89F2CE40261A14 /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 32C2AD20476478C56E174B31 /* libPods.a */; };
 /* End PBXBuildFile section */
 
@@ -278,6 +281,8 @@
 		C568EBDE1C414B8300BA8052 /* ICNewsNewestTableView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ICNewsNewestTableView.m; sourceTree = "<group>"; };
 		C56C3E7A1C831BC9003443B3 /* ICInputTextField.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ICInputTextField.h; sourceTree = "<group>"; };
 		C56C3E7B1C831BC9003443B3 /* ICInputTextField.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ICInputTextField.m; sourceTree = "<group>"; };
+		C57275FD1CB7B98800F5ED18 /* ICSearchViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ICSearchViewController.h; sourceTree = "<group>"; };
+		C57275FE1CB7B98800F5ED18 /* ICSearchViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ICSearchViewController.m; sourceTree = "<group>"; };
 		C57A6BD11C378814008B2129 /* ICNavigationController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ICNavigationController.h; sourceTree = "<group>"; };
 		C57A6BD21C378814008B2129 /* ICNavigationController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ICNavigationController.m; sourceTree = "<group>"; };
 		C57A6BDA1C39345E008B2129 /* UIView+Extension.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIView+Extension.h"; sourceTree = "<group>"; };
@@ -298,6 +303,10 @@
 		C58FF6171C9401300064A3BF /* ICLibraryTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ICLibraryTableViewCell.m; sourceTree = "<group>"; };
 		C58FF6191C947AAE0064A3BF /* ICLibraryContentViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ICLibraryContentViewController.h; sourceTree = "<group>"; };
 		C58FF61A1C947AAE0064A3BF /* ICLibraryContentViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ICLibraryContentViewController.m; sourceTree = "<group>"; };
+		C5BFEBEB1CB8985E00E0C836 /* ICSearchModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ICSearchModel.h; sourceTree = "<group>"; };
+		C5BFEBEC1CB8985E00E0C836 /* ICSearchModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ICSearchModel.m; sourceTree = "<group>"; };
+		C5BFEBEE1CB8ACB400E0C836 /* ICSearchTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ICSearchTableViewCell.h; sourceTree = "<group>"; };
+		C5BFEBEF1CB8ACB400E0C836 /* ICSearchTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ICSearchTableViewCell.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -671,6 +680,7 @@
 		C5519CF21C319596002F5105 /* Classes */ = {
 			isa = PBXGroup;
 			children = (
+				C58C53321CB7B08A00716429 /* Search */,
 				C5061B981CAF7476005C66CB /* Guide(引导页) */,
 				C53F652A1C92D8E4007CDF66 /* Library(知识库) */,
 				C53F65231C92D7FC007CDF66 /* Flash(闪存)(暂无) */,
@@ -938,6 +948,43 @@
 			path = BlogHomeTableViewCell;
 			sourceTree = "<group>";
 		};
+		C58C53321CB7B08A00716429 /* Search */ = {
+			isa = PBXGroup;
+			children = (
+				C58C53331CB7B08A00716429 /* Controller */,
+				C58C53341CB7B08A00716429 /* Model */,
+				C58C53351CB7B08A00716429 /* View */,
+			);
+			path = Search;
+			sourceTree = "<group>";
+		};
+		C58C53331CB7B08A00716429 /* Controller */ = {
+			isa = PBXGroup;
+			children = (
+				C57275FD1CB7B98800F5ED18 /* ICSearchViewController.h */,
+				C57275FE1CB7B98800F5ED18 /* ICSearchViewController.m */,
+			);
+			path = Controller;
+			sourceTree = "<group>";
+		};
+		C58C53341CB7B08A00716429 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				C5BFEBEB1CB8985E00E0C836 /* ICSearchModel.h */,
+				C5BFEBEC1CB8985E00E0C836 /* ICSearchModel.m */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		C58C53351CB7B08A00716429 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				C5BFEBEE1CB8ACB400E0C836 /* ICSearchTableViewCell.h */,
+				C5BFEBEF1CB8ACB400E0C836 /* ICSearchTableViewCell.m */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
 		E434148A412D0ED240DD45D7 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
@@ -1138,11 +1185,13 @@
 				C53F651F1C92CEFF007CDF66 /* ICBlogScrollView.m in Sources */,
 				C52CC74A1C426E5400579D06 /* ICNews.m in Sources */,
 				C54A92591C86AAFD00CA58E5 /* ICOAuthTool.m in Sources */,
+				C57275FF1CB7B98800F5ED18 /* ICSearchViewController.m in Sources */,
 				C5061BC31CAFB887005C66CB /* ICBlogPickedCollectionViewLayout.m in Sources */,
 				C567DFA91C7B3067001ECD9C /* ICLoginViewController.m in Sources */,
 				C54A925C1C87BACA00CA58E5 /* ICUser.m in Sources */,
 				C5061BC61CAFC5C7005C66CB /* ICBlog.m in Sources */,
 				C53F65301C92DA65007CDF66 /* ICLibraryViewController.m in Sources */,
+				C5BFEBED1CB8985E00E0C836 /* ICSearchModel.m in Sources */,
 				C567DFA61C7B3056001ECD9C /* ICMeViewController.m in Sources */,
 				C568EBD01C3E65DC00BA8052 /* ICNetWorkTool.m in Sources */,
 				C54A92621C885E8F00CA58E5 /* ICUserTableHeaderView.m in Sources */,
@@ -1165,6 +1214,7 @@
 				C54A92561C85477100CA58E5 /* ICOAuth.m in Sources */,
 				C5519D2C1C3279CE002F5105 /* ICTableViewDataSource.m in Sources */,
 				C5061B941CAECA19005C66CB /* UIFont+Extension.m in Sources */,
+				C5BFEBF01CB8ACB400E0C836 /* ICSearchTableViewCell.m in Sources */,
 				C568EBDC1C3EB61900BA8052 /* ICCollectionViewDataSource.m in Sources */,
 				C56C3E7C1C831BC9003443B3 /* ICInputTextField.m in Sources */,
 				C52CC7411C41522600579D06 /* ICNewsHotTableView.m in Sources */,

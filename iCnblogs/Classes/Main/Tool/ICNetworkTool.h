@@ -17,6 +17,10 @@
 + (void)loadDataWithURL:(NSString *)requestURL
                    success:(void (^)(id responseObject))success
                    failure:(void (^)(NSError *error))failure;
++ (void)loadDataWithURL:(NSString *)requestURL
+             parameters:(NSDictionary *)parameters
+                success:(void (^)(id))success
+                failure:(void (^)(NSError *))failure;
 + (void)loadContentWithURL:(NSString *)requestURL
                    success:(void (^)(id responseObject))success
                    failure:(void (^)(NSError *error))failure;

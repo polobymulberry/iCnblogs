@@ -8,18 +8,22 @@
 
 #import "ICNewsViewController.h"
 #import "ICNewsScrollView.h"
+#import "ICSearchViewController.h"
 
 #import <HMSegmentedControl/HMSegmentedControl.h>
 #import <Masonry/Masonry.h>
+#import <MJRefresh/MJRefresh.h>
 #import <RESideMenu/RESideMenu.h>
 
 #define ICNewsSegmentCotrolHeight 36
 #define ICNewsSegmentColor [UIColor colorWithRed:234/255.0 green:234/255.0 blue:239/255.0 alpha:0.3]
 
-@interface ICNewsViewController () <UIScrollViewDelegate>
+@interface ICNewsViewController () <UIScrollViewDelegate, UISearchBarDelegate>
 
 @property (nonatomic, strong) HMSegmentedControl *segmentedControl;
 @property (nonatomic, strong) ICNewsScrollView *scrollView;
+
+@property (nonatomic, strong) UISearchController *newsSearchController;
 
 @end
 
@@ -40,8 +44,11 @@
 
 - (void)setupNavigationBar
 {
-    self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"icon_left_menu"] style:UIBarButtonItemStylePlain target:self action:@selector(presentLeftSideMenuViewController)];
     self.navigationItem.title = @"新闻";
+    
+    self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"icon_left_menu"] style:UIBarButtonItemStylePlain target:self action:@selector(presentLeftSideMenuViewController)];
+    
+    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"btnSearch"] style:UIBarButtonItemStylePlain target:self action:@selector(didTappedSearchBarButton)];
 }
 
 - (void)layoutPageSubViews
@@ -60,6 +67,12 @@
     [self.sideMenuViewController presentLeftMenuViewController];
 }
 
+- (void)didTappedSearchBarButton
+{
+    ICLog(@"didTappedSearchBarButton");
+    [self.navigationController presentViewController:self.newsSearchController animated:YES completion:nil];
+}
+
 #pragma mark - UIScrollViewDelegate
 // 横向滑动
 - (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView
@@ -67,6 +80,15 @@
     CGFloat pageWidth = self.view.width;
     NSInteger pageIndex = (NSInteger)(scrollView.contentOffset.x / pageWidth);
     self.segmentedControl.selectedSegmentIndex = pageIndex;
+}
+
+#pragma mark - UISearchBarDelegate
+- (void)searchBarTextDidEndEditing:(UISearchBar *)searchBar
+{
+    ICSearchViewController *searchViewController = (ICSearchViewController *)self.newsSearchController.searchResultsController;
+    searchViewController.searchString = self.newsSearchController.searchBar.text;
+    UITableView *newsSearchTableView = searchViewController.tableView;
+    [newsSearchTableView.mj_header beginRefreshing];
 }
 
 #pragma mark - getters and setters
@@ -100,6 +122,22 @@
     }
     
     return _scrollView;
+}
+
+- (UISearchController *)newsSearchController
+{
+    if (_newsSearchController == nil) {
+        // 设置resultsViewController
+        ICSearchViewController *resultsViewController = [[ICSearchViewController alloc] initWithStyle:UITableViewStylePlain searchType:ICSearchTypeNews];
+        
+        _newsSearchController = [[UISearchController alloc] initWithSearchResultsController:resultsViewController];
+        //_librarySearchController.searchResultsUpdater = self;
+        _newsSearchController.searchBar.placeholder = @"输入您要搜索的新闻";
+        _newsSearchController.searchBar.tintColor = [UIColor whiteColor];
+        _newsSearchController.searchBar.barTintColor = [UIColor blackColor];
+        _newsSearchController.searchBar.delegate = self;
+    }
+    return _newsSearchController;
 }
 
 @end

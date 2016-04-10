@@ -19,7 +19,7 @@ NSString *const kICLibraryDateAdded     = @"DateAdded";
 @implementation ICLibrary
 
 #pragma mark - init methods
-- (instancetype)initWithAttributes:(NSDictionary *)attributes
++ (instancetype)initWithAttributes:(NSDictionary *)attributes
 {
     ICLibrary *library = [[ICLibrary alloc] init];
     
