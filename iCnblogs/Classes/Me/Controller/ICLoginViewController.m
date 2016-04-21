@@ -116,15 +116,23 @@ static BOOL hasKeyboardShow = NO;
     ICLog(@"passwordCipherString: %@", passwordCipherString);
     
     [ICOAuthTool oauthWithUserName:usernameCipherString password:passwordCipherString success:^(id  _Nullable responseObject) {
+        // 更新用户OAuth信息
         ICOAuth *oauth = [ICOAuth initWithAttribute:responseObject];
         [ICOAuthTool save:oauth];
+        
+        // 登录成功
+        hud.labelText = @"登录成功";
+        [hud hide:YES afterDelay:1.0];
+        
         // 跳转到MeViewController
-        [hud hide:YES];
         ICNavigationController *meNavigationController = [[ICNavigationController alloc] initWithRootViewController:[[ICMeViewController alloc] init]];
         ICLeftSideMenu *leftSideMenu = [[ICLeftSideMenu alloc] initWithContentViewController:meNavigationController];
         [self.navigationController presentViewController:leftSideMenu animated:YES completion:nil];
     } failure:^(NSError * _Nonnull error) {
-        ICLog(@"failure: %@", error);
+        ICLog(@"login failure: %@", error);
+        // 登录失败，请检查后重新登录
+        hud.labelText = @"登录失败，请检查后重新登录";
+        [hud hide:YES afterDelay:1.0];
     }];
 }
 

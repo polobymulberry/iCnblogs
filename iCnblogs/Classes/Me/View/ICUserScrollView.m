@@ -9,7 +9,6 @@
 #import "ICUserScrollView.h"
 #import "ICUserBlogTableView.h"
 #import "ICUserCollectionTableView.h"
-#import "ICUserSettingTableView.h"
 
 #import <Masonry/Masonry.h>
 
@@ -31,7 +30,6 @@
         
         [self addSubview:self.blogTableView];
         [self addSubview:self.collectionTableView];
-        [self addSubview:self.settingTableView];
         
         [self layoutScrollSubViews];
     }
@@ -43,14 +41,12 @@
 {
     self.blogTableView.frame = CGRectMake(0, 0, self.width, self.height);
     self.collectionTableView.frame = CGRectMake(self.width, 0, self.width, self.height);
-    self.settingTableView.frame = CGRectMake(self.width*2, 0, self.width, self.height);
 }
 
 - (void)updateSubViews:(CGFloat)height
 {
     self.blogTableView.height = height;
     self.collectionTableView.height = height;
-    self.settingTableView.height = height;
 }
 
 - (ICUserBlogTableView *)blogTableView
@@ -69,15 +65,6 @@
     }
     
     return _collectionTableView;
-}
-
-- (ICUserSettingTableView *)settingTableView
-{
-    if (_settingTableView == nil) {
-        _settingTableView = [[ICUserSettingTableView alloc] initWithFrame:CGRectMake(0, self.size.width * 2, self.size.width, self.size.height) style:UITableViewStyleGrouped];
-    }
-    
-    return _settingTableView;
 }
 
 @end

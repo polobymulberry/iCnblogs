@@ -7,6 +7,7 @@
 //
 
 #import "ICUser.h"
+#import "ICUserTool.h"
 
 NSString *const kUserId             = @"UserId";
 NSString *const kUserSpaceUserId    = @"SpaceUserId";
@@ -19,19 +20,6 @@ NSString *const kUserBlogApp        = @"BlogApp";
 
 @implementation ICUser
 
-// 每个手机app上只可能存在一个user，所以此处我使用单例模式
-+ (instancetype)user
-{
-    static ICUser *user = nil;
-    
-    static dispatch_once_t onceToken;
-    dispatch_once(&onceToken, ^{
-        user = [[ICUser alloc] init];
-    });
-    
-    return user;
-}
-
 + (instancetype)initWithAttributes:(NSDictionary *)attributes
 {
     ICUser *user = [ICUser user];
@@ -43,6 +31,19 @@ NSString *const kUserBlogApp        = @"BlogApp";
     user.avatarURL      = [NSURL URLWithString:attributes[kUserAvatarURL]];
     user.seniority      = attributes[kUserSeniority];
     user.blogApp        = attributes[kUserBlogApp];
+    
+    return user;
+}
+
+// 每个手机app上只可能存在一个user，所以此处我使用单例模式
++ (ICUser *)user
+{
+    static ICUser *user = nil;
+    
+    static dispatch_once_t onceToken;
+    dispatch_once(&onceToken, ^{
+        user = [[ICUser alloc] init];
+    });
     
     return user;
 }

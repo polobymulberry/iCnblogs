@@ -174,7 +174,7 @@
 - (HMSegmentedControl *)segmentedControl
 {
     if (_segmentedControl == nil) {
-        NSArray *titles = @[@"我的博客", @"我的收藏", @"设置"];
+        NSArray *titles = @[@"我的博客", @"我的收藏"];
         _segmentedControl = [[HMSegmentedControl alloc] initWithSectionTitles:titles];
         _segmentedControl.frame = CGRectMake(0, [UIApplication sharedApplication].statusBarFrame.size.height+self.navigationController.navigationBar.height+ICDeviceWidth*0.5, ICDeviceWidth, ICMeSegmentedControlHeight);
         // 字体设置

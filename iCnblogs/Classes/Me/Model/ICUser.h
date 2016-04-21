@@ -28,7 +28,10 @@ extern NSString *const kUserBlogApp;
 @property (nonatomic, copy)     NSString    *seniority; // 园龄
 @property (nonatomic, copy)     NSString    *blogApp;
 
-+ (instancetype)user;
 + (instancetype)initWithAttributes:(NSDictionary *)attributes;
+// 这里我将isLogin和logout放到了ICUserTool中，而将user放在了ICUser中
+// 我觉得ICUser是Model，所以类似isLogin和logout业务性比较强的就交个ICUserTool处理了
+// 而user这种弱业务的就直接放在user中了，以后复用性也比较强
++ (ICUser *)user;
 
 @end

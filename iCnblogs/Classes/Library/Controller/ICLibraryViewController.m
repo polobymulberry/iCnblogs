@@ -48,6 +48,8 @@ static NSString *libraryNetworkRequestURL(int pageIndex, int pageSize)
 #pragma mark - life cycle
 - (void)viewDidLoad
 {
+    [super viewDidLoad];
+    
     [self setupNavigationBar];
     
     [self.view addSubview:self.tableView];

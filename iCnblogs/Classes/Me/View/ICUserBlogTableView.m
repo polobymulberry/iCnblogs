@@ -107,7 +107,7 @@ static NSString *userBlogNetworkRequestURL(NSString *blogApp ,int pageIndex)
                 }
             } failure:^(NSError *error) {
                 ICLog(@"user blog load more data failure: %@", error);
-                [weakSelf.mj_header endRefreshing];
+                [weakSelf.mj_footer endRefreshing];
             }];
         }
     }];

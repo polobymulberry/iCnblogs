@@ -7,6 +7,7 @@
 //
 
 #import "ICFlashViewController.h"
+#import "ICUserTool.h"
 
 #import <RESideMenu/RESideMenu.h>
 
@@ -20,6 +21,13 @@
 {
     self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"icon_left_menu"] style:UIBarButtonItemStylePlain target:self action:@selector(presentLeftSideMenuViewController)];
     self.navigationItem.title = @"闪存";
+    
+    // 对于我已经登录和未登录要分两种情况讨论
+    if ([ICUserTool isLogin]) {
+        
+    } else {
+        
+    }
 }
 
 - (void)presentLeftSideMenuViewController

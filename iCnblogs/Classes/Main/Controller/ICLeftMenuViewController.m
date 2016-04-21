@@ -16,6 +16,7 @@
 #import "ICLibraryViewController.h"
 #import "ICMeViewController.h"
 #import "ICNewsViewController.h"
+#import "ICSettingViewController.h"
 #import "ICLeftMenuHeaderView.h"
 #import "ICOAuthTool.h"
 #import "ICOAuth.h"
@@ -32,8 +33,9 @@ typedef NS_ENUM(NSInteger, ICLeftMenuType) {
     ICLeftMenuTypeBlog      = 0, // 博客
     ICLeftMenuTypeNews      = 1, // 新闻
     ICLeftMenuTypeLibrary   = 2, // 文库
-    ICLeftMenuTypeUserInfo  = 3  // 个人
-    //ICLeftMenuTypeFlash     = 2, // 闪存
+    ICLeftMenuTypeFlash     = 3, // 闪存
+    ICLeftMenuTypeUserInfo  = 4, // 个人
+    ICLeftMenuTypeSetting   = 5  // 设置,与个人模块有所区分
 };
 
 #define ICUserInfoURL @"http://api.cnblogs.com/api/Users"
@@ -50,6 +52,7 @@ typedef NS_ENUM(NSInteger, ICLeftMenuType) {
 @property (nonatomic, strong) ICFlashViewController *flashViewController;
 @property (nonatomic, strong) ICLibraryViewController *libraryViewController;
 @property (nonatomic, strong) ICMeViewController *meViewController;
+@property (nonatomic, strong) ICSettingViewController *settingViewController;
 
 @end
 
@@ -117,7 +120,7 @@ typedef NS_ENUM(NSInteger, ICLeftMenuType) {
         } else {
             cellHeight = 44;
         }
-        make.size.mas_equalTo(CGSizeMake(ICDeviceWidth * 0.4, cellHeight * 7 + ICDeviceWidth * 0.4));
+        make.size.mas_equalTo(CGSizeMake(ICDeviceWidth * 0.4, cellHeight * 8 + ICDeviceWidth * 0.4));
         make.leading.mas_equalTo(self.view.mas_leading);
         make.centerY.mas_equalTo(self.view.mas_centerY).offset(-ICDeviceWidth*0.3);
     }];
@@ -126,7 +129,7 @@ typedef NS_ENUM(NSInteger, ICLeftMenuType) {
 #pragma mark - UITableViewDelegate
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    NSInteger selectedIndex = indexPath.section * tableView.numberOfSections + indexPath.row;
+    ICLeftMenuType selectedIndex = indexPath.section * tableView.numberOfSections + indexPath.row;
     
     switch (selectedIndex) {
         case ICLeftMenuTypeBlog:
@@ -137,10 +140,10 @@ typedef NS_ENUM(NSInteger, ICLeftMenuType) {
             [self.sideMenuViewController hideMenuViewController];
             self.sideMenuViewController.contentViewController = [[ICNavigationController alloc] initWithRootViewController:self.newsViewController];
             break;
-//        case ICLeftMenuTypeFlash:
-//            [self.sideMenuViewController hideMenuViewController];
-//            self.sideMenuViewController.contentViewController = [[ICNavigationController alloc] initWithRootViewController:self.flashViewController];
-//            break;
+        case ICLeftMenuTypeFlash:
+            [self.sideMenuViewController hideMenuViewController];
+            self.sideMenuViewController.contentViewController = [[ICNavigationController alloc] initWithRootViewController:self.flashViewController];
+            break;
         case ICLeftMenuTypeLibrary:
             [self.sideMenuViewController hideMenuViewController];
             self.sideMenuViewController.contentViewController = [[ICNavigationController alloc] initWithRootViewController:self.libraryViewController];
@@ -149,8 +152,13 @@ typedef NS_ENUM(NSInteger, ICLeftMenuType) {
             [self.sideMenuViewController hideMenuViewController];
             self.sideMenuViewController.contentViewController = [[ICNavigationController alloc] initWithRootViewController:self.meViewController];
             break;
-        default:
+        case ICLeftMenuTypeSetting:
+            [self.sideMenuViewController hideMenuViewController];
+            self.sideMenuViewController.contentViewController = [[ICNavigationController alloc] initWithRootViewController:self.settingViewController];
             break;
+        // 下面default不要添加，这样可以利用XCode的warning功能来提示有哪些ICLeftMenuType变量没添加
+        //default:
+        //    break;
     }
 }
 
@@ -176,6 +184,11 @@ typedef NS_ENUM(NSInteger, ICLeftMenuType) {
     
     [self configureTableHeaderView:headerView];
     return headerView;
+}
+
+- (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
+{
+    return ICDeviceWidth * 0.4;
 }
 
 - (void)configureTableHeaderView:(ICLeftMenuHeaderView *)headerView
@@ -206,15 +219,11 @@ typedef NS_ENUM(NSInteger, ICLeftMenuType) {
     } noAccessTokenBlock:nil];
 }
 
+#pragma mark - event response
 - (void)didTappedHeaderView
 {
     [self.sideMenuViewController hideMenuViewController];
     self.sideMenuViewController.contentViewController = [[ICNavigationController alloc] initWithRootViewController:[[ICMeViewController alloc] init]];
-}
-
-- (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
-{
-    return ICDeviceWidth * 0.4;
 }
 
 #pragma mark - getters and setters
@@ -222,7 +231,7 @@ typedef NS_ENUM(NSInteger, ICLeftMenuType) {
 {
     if (_blogLeftMenuTitleArray == nil) {
         _blogLeftMenuTitleArray =
-        [NSMutableArray arrayWithObjects:@"博客",@"新闻",/*@"闪存",*/@"文库",@"个人",nil];
+        [NSMutableArray arrayWithObjects:@"博客",@"新闻",@"文库",@"闪存",@"个人",@"设置",nil];
     }
     return _blogLeftMenuTitleArray;
 }
@@ -290,6 +299,15 @@ typedef NS_ENUM(NSInteger, ICLeftMenuType) {
     }
     
     return _meViewController;
+}
+
+- (ICSettingViewController *)settingViewController
+{
+    if (_settingViewController == nil) {
+        _settingViewController = [[ICSettingViewController alloc] init];
+    }
+    
+    return _settingViewController;
 }
 
 - (UITableView *)tableView
